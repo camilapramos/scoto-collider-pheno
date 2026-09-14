@@ -1,0 +1,27 @@
+# C. Ramos
+# 2026 August 
+# ScotoLHC [Boukidi, et al]
+# Generate decay rates for Z -> 2 SM tau neutrinos and 2 BSM neutrinos
+
+import model SM_Scotogenic_MassiveLeptons_NLO
+generate Z > vt vt~ n1 n1 QED=1 QCD=0
+output ScotoLHC_decayZtoNutNutbarN1N1
+launch
+set no_parton_cut
+set YtaN1 1
+set YeN1 0
+set YeN2 0
+set YeN3 0
+set YmuN1 0
+set YmuN2 0
+set YmuN3 0
+set YtaN2 0
+set YtaN3 0
+set mn2 1.0e+10
+set mn3 1.0e+10
+set mn1 scan1:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40]
+set metap scan2:[100,250,500,1000,10000]
+set metar scan2:[100,250,500,1000,10000]
+set metai scan2:[100,250,500,1000,10000]
+set nevents 50k
+done

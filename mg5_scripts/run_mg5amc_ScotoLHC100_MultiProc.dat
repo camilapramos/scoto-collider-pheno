@@ -1,0 +1,174 @@
+# R. Ruiz
+# 2026 September 
+# ScotoLHC [Boukidi, et al]
+# Generate xsec for LHC 100 in the Scotogenic model
+
+set acknowledged_v3.1_syntax true
+import model SM_Scotogenic_NLO
+define eta0 = etaI etaR
+define etaX = eta+ eta-
+define etaAll = eta+ eta- etaR etaI
+
+## NCDY > eta eta
+generate    p p > eta+ eta- QCD=0 QED=2 [QCD]
+add process p p > eta0 eta0 QCD=0 QED=2 [QCD]
+output ScotoLHC_NCDY_EtaEta_NLO_LHC100
+
+## CCDY > eta eta
+generate    p p > etaR etaX QCD=0 QED=2 [QCD]
+add process p p > etaI etaX QCD=0 QED=2 [QCD]
+output ScotoLHC_CCDY_H0HX_NLO_LHC100
+
+## a a > eta eta
+generate a a > eta+ eta- QCD=0 QED=4
+output ScotoLHC_AAF_HpHm_XLO_LHC100
+
+## g g > eta eta
+generate g g > eta+ eta- QCD=2 QED=2 [noborn = QCD]
+add process g g > etar etar QCD=2 QED=2 [noborn = QCD]
+add process g g > etai etai QCD=2 QED=2 [noborn = QCD]
+output ScotoLHC_GGF_EtaEta_XLO_LHC100
+
+## eta eta V
+import model SM_Scotogenic_MassiveLeptons_4fs_NLO
+define ww = w+ w-
+define eta0 = etaI etaR
+define etaAll = eta+ eta- etaR etaI
+
+generate p p > etaAll etaAll z QCD=0 QED=3 [QCD]
+add process p p > etaAll eta0 ww QCD=0 QED=3 [QCD]
+add process p p > eta+ eta- ww QCD=0 QED=3 [QCD]
+output ScotoLHC_DY_EtaEtaV_NLO_LHC100
+
+# #####
+# 1/5 #
+# #####
+launch ScotoLHC_NCDY_EtaEta_NLO_LHC100
+order=NLO
+fixed_order=ON
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+set req_acc_FO 0.01
+set lhc 100
+set pdlabel lhapdf
+set lhaid 335900
+set reweight_scale True
+set reweight_pdf True
+set dynamical_scale_choice 3
+set no_parton_cut
+set jetalgo -1
+set jetradius 0.4
+set ptj 30
+set etaj 5.0
+done 
+
+launch ScotoLHC_NCDY_EtaEta_NLO_LHC100
+order=LO
+fixed_order=ON
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+done 
+
+# #####
+# 2/5 #
+# #####
+launch ScotoLHC_CCDY_H0HX_NLO_LHC100
+order=NLO
+fixed_order=ON
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+set req_acc_FO 0.01
+set lhc 100
+set pdlabel lhapdf
+set lhaid 335900
+set reweight_scale True
+set reweight_pdf True
+set dynamical_scale_choice 3
+set no_parton_cut
+set jetalgo -1
+set jetradius 0.4
+set ptj 30
+set etaj 5.0
+done
+
+launch ScotoLHC_CCDY_H0HX_NLO_LHC100
+order=LO
+fixed_order=ON
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+done 
+
+# #####
+# 3/5 #
+# #####
+launch ScotoLHC_DY_EtaEtaV_NLO_LHC100
+order=NLO
+fixed_order=ON
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+set req_acc_FO 0.01
+set lhc 100
+set pdlabel lhapdf
+set lhaid 335900
+set reweight_scale True
+set reweight_pdf True
+set dynamical_scale_choice 3
+set no_parton_cut
+set jetalgo -1
+set jetradius 0.4
+set ptj 30
+set etaj 5.0
+done 
+
+launch ScotoLHC_DY_EtaEtaV_NLO_LHC100
+order=LO
+fixed_order=ON
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+done 
+
+# #####
+# 4/5 #
+# #####
+launch ScotoLHC_AAF_HpHm_XLO_LHC100
+shower=off
+analysis=off
+set metap scan1:[250,1000]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
+set nevents 100k
+set lhc 100
+set pdlabel lhapdf
+set lhaid 335900
+set fixed_ren_scale False
+set fixed_fac_scale False
+set dynamical_scale_choice 3
+set use_syst True
+set no_parton_cut
+done 
+
+# #####
+# 5/5 #
+# #####
+launch ScotoLHC_GGF_EtaEta_XLO_LHC100
+shower=off
+analysis=off
+set metap scan1:[250,1000]
+set metar scan1:[251,1001]
+set metai scan1:[252,1002]
+set nevents 100k
+set lhc 100
+set pdlabel lhapdf
+set lhaid 335900 
+set fixed_ren_scale False
+set fixed_fac_scale False
+set dynamical_scale_choice 3
+set use_syst True
+set no_parton_cut
+done 
