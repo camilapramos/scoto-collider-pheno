@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-# C. Ramos
+# R. Ruiz, C. Ramos
 # 2026 September
 # Purpose: Copy MadGraph5_aMC@NLO decay-width scan files
 # into a common directory with more convenient names.

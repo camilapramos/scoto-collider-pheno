@@ -38,7 +38,6 @@ processes = {
 
 
 def read_results(path, energy, process_type):
-
     """Read organized MadGraph scan results for a given process and energy."""
 
     process_dir = DATA_PATH
@@ -74,7 +73,6 @@ def read_results(path, energy, process_type):
 
 
 def load_all_results():
-
     """Load scan results for all processes and collider energies."""
 
     results = {}
@@ -89,7 +87,6 @@ def load_all_results():
 
 
 def sci_latex(x, digits=2):
-
     """Format a number in scientific notation for LaTeX."""
 
     coefficient, exponent = f'{x:.{digits}e}'.split('e')
@@ -99,7 +96,6 @@ def sci_latex(x, digits=2):
 
 
 def format_xsec(df):
-
     """Format a cross section and its scale/PDF uncertainties."""
 
     cross_fb = df['cross'].iloc[0] * 1000 # mg5 values are in pb; the table is in fb.
@@ -114,7 +110,6 @@ def format_xsec(df):
 
 
 def get_xsec(df, mass, tolerance=1.0):
-
     """Return the scan point closest to the requested mass."""
 
     if df.empty:
@@ -130,7 +125,6 @@ def get_xsec(df, mass, tolerance=1.0):
 
 
 def format_process_row(process, mass, results):
-
     """Build the LaTeX table entries for one process and one mass."""
 
     info = processes[process]
@@ -218,7 +212,6 @@ def format_process_row(process, mass, results):
 
 
 def get_central_xsec(df, mass, tolerance=1.0):
-
     """Return the central cross section in fb for the closest mass point."""
 
     data = get_xsec(df, mass, tolerance)
@@ -251,14 +244,14 @@ def print_summary(results, masses):
                 xsec_100 = get_central_xsec(results[process]['100']['XLO'],mass)
 
             else:
-                raise ValueError(f'Unknown process type: {info["type"]}')
+                raise ValueError(f'Unknown process type: {info['type']}')
             
             if xsec_14 is None or xsec_100 is None:
-                print(f'  {process.replace("DY", "eta eta V"):<10} missing data')
+                print(f'  {process.replace('DY', 'eta eta V'):<10} missing data')
 
             else:
                 print(
-                    f'  {process.replace("DY", "eta eta V"):<10} '
+                    f'  {process.replace('DY', 'eta eta V'):<10} '
                     f'14 TeV: {xsec_14:.3e} fb    '
                     f'100 TeV: {xsec_100:.3e} fb'
                 )
@@ -267,8 +260,7 @@ def print_summary(results, masses):
 
 
 def make_table(results, masses):
-
-    """Write the LaTeX cross-section table."""
+    """Write the cross-section table in LaTeX format"""
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
