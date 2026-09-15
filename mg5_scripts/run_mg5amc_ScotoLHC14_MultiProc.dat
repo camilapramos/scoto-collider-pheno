@@ -160,8 +160,8 @@ launch ScotoLHC_GGF_EtaEta_XLO_LHC14
 shower=off
 analysis=off
 set metap scan1:[250,1000]
-set metar scan1:[251,1001]
-set metai scan1:[252,1002]
+set metar scan1:[250,1000]
+set metai scan1:[250,1000]
 set nevents 100k
 set lhc 14
 set pdlabel lhapdf
