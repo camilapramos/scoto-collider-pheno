@@ -94,4 +94,4 @@ The script [`make_br_plots.py`](./make_br_plots.py) reads the files in [data_fil
 ./make_br_plots.py
 ```
 
-The generated figures are saved in [br_plots/](./br_plots/). If other scalar masses are generated, these can be displayed by changing the list `m_eta_vals`in the scritp.
+The generated figures are saved in [br_plots/](./br_plots/). If other scalar masses are generated, these can be displayed by changing the list `m_eta_vals`in the script.
