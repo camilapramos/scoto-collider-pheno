@@ -88,7 +88,7 @@ The script will also print a summary of the results, which can be suppressed wit
 
 # 2. Generating the branching ratio plots
 
-The script [`make_br_plots.py`](./make_br_plots.py) reads the files in [data_files/data_decay/](./data_files/data_decay/) and generates the branching ratio plots for $Z \to \tau^{+} \tau^{-} N1 N1$ and $Z \to \nu_{\tau} \overline{\nu_{\tau}} N1 N1$. The command to run the script is
+The script [`make_br_plots.py`](./make_br_plots.py) reads the files in [data_files/data_decay/](./data_files/data_decay/) and generates the branching ratio plots for $Z \to \tau^{+} \tau^{-} N_{1} N_{1}$ and $Z \to \nu_{\tau} \overline{\nu_{\tau}} N_{1} N_{1}$. The command to run the script is
 
 ```bash
 ./make_br_plots.py
