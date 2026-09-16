@@ -29,10 +29,10 @@ meta = 'mass#9900035'
 
 
 processes = {
-    'DY': {'type': 'NLO', 'path': 'mg5amc_ScotoScan_DY_EtaEtaV', 'label': r'$\eta\eta V$'},
     'CCDY': {'type': 'NLO', 'path': 'mg5amc_ScotoScan_CCDY_H0HX', 'label': 'CCDY'},
     'NCDY': {'type': 'NLO', 'path': 'mg5amc_ScotoScan_NCDY_EtaEta', 'label': 'NCDY'},
     'GF': {'type': 'XLO', 'path': 'mg5amc_ScotoScan_GGF_EtaEta', 'label': 'GF'},
+    'DY': {'type': 'NLO', 'path': 'mg5amc_ScotoScan_DY_EtaEtaV', 'label': r'$\eta\eta V$'},
     'AF': {'type': 'XLO', 'path': 'mg5amc_ScotoScan_AAF_HpHm', 'label': 'AF'}
 }
 
@@ -87,12 +87,25 @@ def load_all_results():
 
 
 def sci_latex(x, digits=2):
-    """Format a number in scientific notation for LaTeX."""
+    """Format a number for LaTeX.
 
-    coefficient, exponent = f'{x:.{digits}e}'.split('e')
-    exponent = int(exponent)
+    Use fixed-point notation for exponents 0 and -1.
+    Use scientific notation for all other exponents.
+    """
+    if x is None or pd.isna(x):
+        return "--"
 
-    return rf'{{{coefficient} \cdot 10^{{{exponent}}}}}'
+    if x == 0:
+        return "0.00"
+
+    exponent = int(f"{abs(x):.0e}".split("e")[1])
+
+    if exponent in (0, -1):
+        return f"{x:.{digits}f}"
+
+    coefficient = x / (10 ** exponent)
+
+    return rf'{{{coefficient:.{digits}f} \cdot 10^{{{exponent}}}}}'
 
 
 def format_xsec(df):
@@ -235,6 +248,8 @@ def print_summary(results, masses):
         print(f'm = {mass:.0f} GeV')
 
         for process, info in processes.items():
+            info = processes[process]
+            display_name = info['label']
             if info['type'] == 'NLO':
                 xsec_14 = get_central_xsec(results[process]['14']['NLO'],mass)
                 xsec_100 = get_central_xsec(results[process]['100']['NLO'],mass)
@@ -244,14 +259,14 @@ def print_summary(results, masses):
                 xsec_100 = get_central_xsec(results[process]['100']['XLO'],mass)
 
             else:
-                raise ValueError(f'Unknown process type: {info['type']}')
+                raise ValueError(f"Unknown process type: {info['type']}")
             
             if xsec_14 is None or xsec_100 is None:
-                print(f'  {process.replace('DY', 'eta eta V'):<10} missing data')
+                print(f"  {display_name:<10} missing data")
 
             else:
                 print(
-                    f'  {process.replace('DY', 'eta eta V'):<10} '
+                    f"  {display_name:<10} "
                     f'14 TeV: {xsec_14:.3e} fb    '
                     f'100 TeV: {xsec_100:.3e} fb'
                 )
@@ -276,10 +291,10 @@ def make_table(results, masses):
             r'\multicolumn{3}{c}{$\sqrt{s} = 100\TeV$ LHC}'
             '\n' r'\\' '\n'
             r'mass [GeV] & Process & '
-            r'$\sigma^{\rm LO}$ [fb] & '
-            r'$\sigma^{\rm NLO}$ [fb] & $K$ & '
-            r'$\sigma^{\rm LO}$ [fb] & '
-            r'$\sigma^{\rm NLO}$ [fb] & $K$'
+            r'$\sigma^{\rm LO}\ [\rm fb]\ \delta_{\rm scale}\ \delta_{\rm PDF}$ & '
+            r'$\sigma^{\rm NLO}\ [\rm fb]\ \delta_{\rm scale}\ \delta_{\rm PDF}$ & $K$ & '
+            r'$\sigma^{\rm LO}\ [\rm fb]\ \delta_{\rm scale}\ \delta_{\rm PDF}$ & '
+            r'$\sigma^{\rm NLO}\ [\rm fb]\ \delta_{\rm scale}\ \delta_{\rm PDF}$ & $K$'
             '\n' r'\\' '\n'
             r'\hline\hline' '\n'
         )

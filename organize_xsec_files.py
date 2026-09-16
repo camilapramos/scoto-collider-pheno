@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-# R. Ruiz --- with few adaptations by C. Ramos
+# R. Ruiz, C. Ramos
 # 2026 August
 # Purpose: To copy over set of files from MadGraph5_aMC@NLO's parameter scan into single directory with (more) sensible names
 # Usage: $ python scotoLHC_Copy_Over_Scans.py
