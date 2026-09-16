@@ -47,17 +47,20 @@ def make_br_plot( scan_df, ylabel, output_file ):
     mh.style.use("LHCb2") 
 
     fig, ax = plt.subplots(figsize=(9, 8)) 
+    ax.hlines(1e-12, 0, 40, ls='dashed', colors='black', alpha=0.6, lw=1)
+
     for i, mass in enumerate(m_eta_vals): 
         df_m = scan_df[ scan_df["mass#9900035"] == mass ] 
         mass_label = get_mass_label(mass) 
         ax.plot(df_m["mass#9900012"], df_m["cross"] / Z_width,label=mass_label,ls=ls_list[i]) 
-
+    
     ax.set_yscale('log') 
     ax.legend(frameon=True) 
     ax.text(0.6,0.85,addtxt,bbox=dict(facecolor='white',edgecolor='black'),transform=ax.transAxes,fontsize=20) 
     ax.set_xlabel(r'$m_{N_{1}}$ [GeV]', loc='right') 
     ax.set_ylabel(ylabel, loc='top') 
     ax.tick_params(direction="in") 
+    ax.set_ylim(1e-18,1e-9)
     ax.grid(alpha=0.3) 
     fig.tight_layout() 
 
